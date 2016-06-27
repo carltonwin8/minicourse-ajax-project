@@ -1,0 +1,15 @@
+{
+  "name": "minicourse-ajax-project",
+  "version": "1.0.0",
+  "description": "This repo contains the project listed as the header above for the [Udacity](http://www.udacity.com/) [Front-End Web Developer Nanodegree](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001).",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carlton Joseph",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.13.0",
+    "gulp": "^3.9.1"
+  }
+}
