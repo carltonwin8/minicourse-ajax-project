@@ -12,7 +12,7 @@ function loadData() {
     $nytElem.text("");
 
     // load streetview
-    var debug = true;
+    var debug = false;
     if (debug) {
       switch (0) {
         case 1:
@@ -26,6 +26,7 @@ function loadData() {
       }
     }
 
+    // Google maps
     var street = $('#street').val();
     var city = $('#city').val();
     var location = street + ", " + city;
@@ -34,7 +35,7 @@ function loadData() {
     var img = '<img class="bgimg" src="' + ajaxUrl + '">';
     $body.append(img);
 
-    // YOUR CODE GOES HERE!
+    // NYT
     var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
     url += '?' + $.param({'api-key': "57575961577542d386f9f4665b401e00",
       'q': city});
@@ -49,6 +50,26 @@ function loadData() {
     })
     .fail(function() {
       $nytHeaderElem.text('Failed! Could not load the New York Times Articles');
+    });
+
+    // Wikipedia
+    var wikiReqTimeout = setTimeout(function () {
+      $wikiElem.text("Failed getting Wikipedia resources.")
+    }, 3000);
+    $.ajax({
+        url: "https://en.wikipedia.org/w/api.php?"+
+            "action=opensearch&search=" + city +
+            "&format=json&callback=wikiCallback",
+        dataType: "jsonp",
+        success: function(response) {
+            response[1].forEach(function (resp) {
+                var baseUrl = "http://en.wikipedia.org/wiki/"
+                var a = '<a href="' + baseUrl + resp + '">' + resp + '</a>';
+                var li = '<li>' + a + '</li>';
+                $wikiElem.append(li);
+            });
+            clearTimeout(wikiReqTimeout);
+        },
     });
 
     return false;
